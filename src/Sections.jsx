@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   ArrowRight,
-  ArrowUpRight,
   CheckCircle2,
   MapPin,
   Star,
@@ -23,24 +22,12 @@ import { Reveal, SectionHeading, InstagramIcon } from './ui'
 export function Ambientes() {
   return (
     <section id="ambientes" className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <SectionHeading
-          eyebrow="Ambientes"
-          title="Soluções para cada canto da sua casa"
-          description="Do projeto ao acabamento, criamos móveis sob medida que unem estética, funcionalidade e durabilidade."
-        />
-        <Reveal delay={120}>
-          <a
-            href={waLink('Olá! Quero um projeto sob medida para minha casa.')}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-2 text-sm font-bold text-caramel-700 hover:text-caramel-800"
-          >
-            Falar com um especialista
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        </Reveal>
-      </div>
+      <SectionHeading
+        center
+        eyebrow="Ambientes"
+        title="Soluções para cada canto da sua casa"
+        description="Do projeto ao acabamento, criamos móveis sob medida que unem estética, funcionalidade e durabilidade."
+      />
 
       <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-6">
         {AMBIENTES.map((amb, i) => (
@@ -102,7 +89,7 @@ export function PromoBanner() {
                 href={waLink('Olá! Quero solicitar uma visita e orçamento gratuito.')}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-espresso-900 px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-espresso-800"
+                className="btn-shine group inline-flex items-center gap-2 rounded-full bg-espresso-900 px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-espresso-800"
               >
                 Chamar no WhatsApp
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -360,7 +347,7 @@ export function Processo() {
             href={waLink('Olá! Quero começar meu projeto de móveis planejados.')}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full bg-caramel-500 px-8 py-4 text-sm font-bold text-espresso-950 transition-colors hover:bg-caramel-400"
+            className="btn-shine group inline-flex items-center gap-2 rounded-full bg-caramel-500 px-8 py-4 text-sm font-bold text-espresso-950 transition-colors hover:bg-caramel-400"
           >
             Começar meu projeto
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

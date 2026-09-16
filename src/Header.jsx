@@ -68,7 +68,7 @@ export default function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-semibold text-stone-600 transition-colors hover:text-espresso-900"
+                className="nav-link text-sm font-semibold text-stone-600 transition-colors hover:text-espresso-900"
               >
                 {link.label}
               </a>
@@ -80,7 +80,7 @@ export default function Header() {
               href={waLink('Olá! Quero solicitar um orçamento de móveis planejados.')}
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-espresso-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-espresso-800"
+              className="btn-shine group inline-flex items-center gap-2 rounded-full bg-espresso-900 px-6 py-3 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-espresso-800 hover:shadow-[0_14px_28px_-10px_rgba(32,26,21,0.5)]"
             >
               Solicitar orçamento
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

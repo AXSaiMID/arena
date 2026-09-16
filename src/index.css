@@ -8,6 +8,11 @@
   --color-sand: #f2ebe0;
   --color-linen: #e9dcc9;
 
+  --color-gold-300: #e6cb72;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #c6a11c;
+  --color-gold-600: #9c7f14;
+
   --color-caramel-50: #faf5ec;
   --color-caramel-100: #f3e8d3;
   --color-caramel-200: #e9d3ac;
@@ -37,7 +42,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-caramel-500);
+  background: var(--color-gold-500);
   color: #fff;
 }
 
@@ -45,7 +50,7 @@ section[id] {
   scroll-margin-top: 84px;
 }
 
-/* Scroll reveal */
+/* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -58,23 +63,94 @@ section[id] {
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  html {
-    scroll-behavior: auto;
-  }
+/* ---------- Entrada do hero ---------- */
+@keyframes rise-in {
+  from { transform: translateY(112%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mask-line > span {
+  display: block;
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+.fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
 }
 
-/* Hero crossfade */
+/* ---------- Hero slider ---------- */
 .hero-slide {
   transition: opacity 1s ease-in-out;
 }
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to { transform: scale(1.09); }
+}
+.animate-kenburns {
+  animation: ken-burns 6.5s ease-out forwards;
+}
 
-/* Subtle grain-free soft shadow for cards */
+/* ---------- Faixa animada ---------- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ---------- Brilho varrendo botões ---------- */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: translateX(-110%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-shine:hover::after {
+  transform: translateX(110%);
+}
+
+/* ---------- Sublinhado animado (nav) ---------- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-gold-500);
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Cards ---------- */
 .card-shadow {
   box-shadow: 0 10px 30px -12px rgba(32, 26, 21, 0.18);
 }
@@ -82,7 +158,7 @@ section[id] {
   box-shadow: 0 20px 44px -16px rgba(32, 26, 21, 0.28);
 }
 
-/* Floating badges animation */
+/* ---------- Flutuantes ---------- */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
@@ -92,4 +168,27 @@ section[id] {
 }
 .animate-floaty-delayed {
   animation: floaty 6s ease-in-out 1.2s infinite;
+}
+
+/* ---------- Acessibilidade ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .mask-line > span,
+  .fade-up,
+  .animate-kenburns,
+  .animate-marquee,
+  .animate-floaty,
+  .animate-floaty-delayed {
+    animation: none;
+  }
+  .btn-shine::after {
+    display: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
