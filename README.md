@@ -35,7 +35,7 @@ npm run preview   # pré-visualiza o build
 
 ## Pendências do cliente
 
-- [ ] Logo oficial em alta resolução (atualmente placeholder em texto)
+- [x] Logo oficial aplicada (recriada em SVG vetorial; aguardar arquivo original p/ conferência)
 - [ ] Fotos reais dos projetos para substituir as imagens de banco de imagens
 - [ ] Depoimentos reais de clientes
 - [ ] Confirmação do horário de atendimento

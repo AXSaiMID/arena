@@ -1,27 +1,16 @@
 import { useEffect, useState } from 'react'
-import { ArrowRight, Mail, MapPin, Menu, Phone, Ruler, X } from 'lucide-react'
+import { ArrowRight, Mail, MapPin, Menu, Phone, X } from 'lucide-react'
+import LogoImage from './Logo'
 import { FacebookIcon, InstagramIcon } from './ui'
 import { NAV_LINKS, SITE, waLink } from './data'
 
 function Logo() {
   return (
-    <a href="#inicio" className="flex items-center gap-2.5">
-      {/* Placeholder: substituir pela logo oficial quando enviada */}
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-espresso-900 text-linen">
-        <Ruler className="h-5 w-5" />
-      </span>
-      <span className="leading-none">
-        <span className="block font-display text-xl font-extrabold tracking-tight text-espresso-900">
-          NARDO
-        </span>
-        <span className="block text-[10px] font-bold uppercase tracking-[0.32em] text-caramel-600">
-          Planejados
-        </span>
-      </span>
+    <a href="#inicio" className="flex items-center" aria-label="Nardo Planejados — Início">
+      <LogoImage className="h-11 w-auto sm:h-12" />
     </a>
   )
 }
-
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)

@@ -5,11 +5,11 @@ import {
   Mail,
   MapPin,
   Phone,
-  Ruler,
   Send,
 } from 'lucide-react'
 import { AMBIENTES, NAV_LINKS, SITE, waLink } from './data'
 import { FacebookIcon, InstagramIcon, Reveal, SectionHeading } from './ui'
+import LogoImage from './Logo'
 
 const inputClass =
   'w-full rounded-xl border border-stone-200 bg-cream px-4 py-3 text-[15px] text-espresso-900 placeholder:text-stone-400 outline-none transition-all focus:border-caramel-500 focus:ring-2 focus:ring-caramel-500/30'
@@ -212,18 +212,8 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Marca */}
           <div>
-            <a href="#inicio" className="flex items-center gap-2.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linen text-espresso-900">
-                <Ruler className="h-5 w-5" />
-              </span>
-              <span className="leading-none">
-                <span className="block font-display text-xl font-extrabold tracking-tight text-white">
-                  NARDO
-                </span>
-                <span className="block text-[10px] font-bold uppercase tracking-[0.32em] text-caramel-300">
-                  Planejados
-                </span>
-              </span>
+            <a href="#inicio" className="inline-block" aria-label="Nardo Planejados — Início">
+              <LogoImage variant="light" className="h-12 w-auto" />
             </a>
             <p className="mt-4 text-sm leading-relaxed">{SITE.tagline}</p>
             <div className="mt-5 flex gap-3">
