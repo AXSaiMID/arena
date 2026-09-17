@@ -2,7 +2,7 @@ import Header from './Header'
 import { Hero, TrustBar } from './Hero'
 import { Ambientes, Depoimentos, Processo, PromoBanner, Projetos, Sobre } from './Sections'
 import { Contato, Footer } from './Contact'
-import { WhatsFloat } from './ui'
+import { BackToTop, ScrollProgress, WhatsFloat } from './ui'
 
 export default function App() {
   return (
@@ -20,6 +20,8 @@ export default function App() {
         <Contato />
       </main>
       <Footer />
+      <ScrollProgress />
+      <BackToTop />
       <WhatsFloat />
     </div>
   )

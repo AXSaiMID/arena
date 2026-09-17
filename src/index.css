@@ -32,6 +32,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-caramel-500) var(--color-cream);
 }
 
 body {
@@ -39,6 +41,18 @@ body {
   color: #292524;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-caramel-400), var(--color-gold-500));
+  border-radius: 999px;
+  border: 2px solid var(--color-cream);
 }
 
 ::selection {
@@ -88,6 +102,43 @@ section[id] {
   animation-delay: var(--d, 0ms);
 }
 
+/* ---------- Aurora animada ---------- */
+@keyframes drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, -30px) scale(1.15); }
+}
+@keyframes drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 40px) scale(1.1); }
+}
+.animate-drift-1 {
+  animation: drift-1 12s ease-in-out infinite;
+}
+.animate-drift-2 {
+  animation: drift-2 14s ease-in-out infinite;
+}
+
+/* ---------- Texto com brilho dourado ---------- */
+@keyframes shimmer-x {
+  from { background-position: 200% center; }
+  to { background-position: -200% center; }
+}
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    var(--color-espresso-900) 30%,
+    var(--color-gold-500) 45%,
+    #f3d67c 50%,
+    var(--color-gold-500) 55%,
+    var(--color-espresso-900) 70%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-x 5s linear infinite;
+}
+
 /* ---------- Hero slider ---------- */
 .hero-slide {
   transition: opacity 1s ease-in-out;
@@ -100,13 +151,49 @@ section[id] {
   animation: ken-burns 6.5s ease-out forwards;
 }
 
-/* ---------- Faixa animada ---------- */
+/* ---------- Faixas animadas ---------- */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 .animate-marquee {
   animation: marquee 30s linear infinite;
+}
+
+/* ---------- Texto vazado gigante ---------- */
+.text-outline {
+  -webkit-text-stroke: 1.5px rgba(198, 161, 28, 0.55);
+  color: transparent;
+}
+
+/* ---------- Grade blueprint (arquitetura) ---------- */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(212, 175, 55, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* ---------- Brilho que segue o cursor ---------- */
+.spotlight {
+  position: relative;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(212, 175, 55, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.spotlight:hover::before {
+  opacity: 1;
 }
 
 /* ---------- Brilho varrendo botões ---------- */
@@ -170,6 +257,33 @@ section[id] {
   animation: floaty 6s ease-in-out 1.2s infinite;
 }
 
+/* ---------- Indicador de scroll ---------- */
+@keyframes scroll-cue {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.animate-scroll-cue {
+  animation: scroll-cue 2s ease-in-out infinite;
+}
+
+/* ---------- Pulso suave ---------- */
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.animate-ping-soft {
+  animation: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ---------- Rotação lenta (selo) ---------- */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
 /* ---------- Acessibilidade ---------- */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
@@ -182,8 +296,18 @@ section[id] {
   .animate-kenburns,
   .animate-marquee,
   .animate-floaty,
-  .animate-floaty-delayed {
+  .animate-floaty-delayed,
+  .animate-drift-1,
+  .animate-drift-2,
+  .animate-scroll-cue,
+  .animate-ping-soft,
+  .animate-spin-slow,
+  .text-shimmer {
     animation: none;
+  }
+  .text-shimmer {
+    background: none;
+    color: var(--color-espresso-900);
   }
   .btn-shine::after {
     display: none;

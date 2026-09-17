@@ -8,7 +8,14 @@ import {
   Send,
 } from 'lucide-react'
 import { AMBIENTES, NAV_LINKS, SITE, waLink } from './data'
-import { FacebookIcon, InstagramIcon, Reveal, SectionHeading } from './ui'
+import {
+  FacebookIcon,
+  InstagramIcon,
+  Magnetic,
+  Reveal,
+  SectionHeading,
+  Spotlight,
+} from './ui'
 import LogoImage from './Logo'
 
 const inputClass =
@@ -140,13 +147,15 @@ export function Contato() {
                   className={`${inputClass} resize-none`}
                 />
               </div>
-              <button
-                type="submit"
+              <Magnetic strength={0.05} className="block">
+                <button
+                  type="submit"
                 className="btn-shine group flex w-full items-center justify-center gap-2 rounded-full bg-espresso-900 px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-espresso-800"
               >
                 Enviar pelo WhatsApp
                 <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </button>
+                </button>
+              </Magnetic>
             </div>
           </form>
         </Reveal>
@@ -156,7 +165,7 @@ export function Contato() {
           <div className="grid gap-4 sm:grid-cols-2">
             {infoCards.map((card, i) => (
               <Reveal key={card.title} delay={i * 70}>
-                <div className="h-full rounded-2xl bg-white p-6 ring-1 ring-stone-200/60">
+                <Spotlight className="h-full rounded-2xl bg-white p-6 ring-1 ring-stone-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-gold-500/40">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-caramel-700">
                     <card.icon className="h-5 w-5" />
                   </span>
@@ -181,7 +190,7 @@ export function Contato() {
                       <ArrowUpRight className="h-4 w-4" />
                     </a>
                   )}
-                </div>
+                </Spotlight>
               </Reveal>
             ))}
           </div>
