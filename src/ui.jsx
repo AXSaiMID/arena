@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUp, MessageCircle } from 'lucide-react'
 import { waLink } from './data'
+import LogoImage from './Logo'
 
 /* Detecta preferência por menos movimento */
 export function usePrefersReducedMotion() {
@@ -15,6 +16,109 @@ export function usePrefersReducedMotion() {
   }, [])
 
   return reduced
+}
+
+/* ---------- PRELOADER ---------- */
+export function Preloader({ onDone }) {
+  const [count, setCount] = useState(0)
+  const [leaving, setLeaving] = useState(false)
+
+  useEffect(() => {
+    let raf
+    const t0 = performance.now()
+    const duration = 1100
+    const tick = (now) => {
+      const progress = Math.min((now - t0) / duration, 1)
+      setCount(Math.round(progress * 100))
+      if (progress < 1) {
+        raf = requestAnimationFrame(tick)
+      } else {
+        setLeaving(true)
+        setTimeout(onDone, 750)
+      }
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [onDone])
+
+  return (
+    <div
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-coal-950 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        leaving ? '-translate-y-full' : ''
+      }`}
+    >
+      <LogoImage variant="light" className="h-14 w-auto" />
+      <p className="mt-8 font-display text-6xl font-extrabold tabular-nums text-white">
+        {count}
+        <span className="text-gold-400">%</span>
+      </p>
+      <div className="mt-6 h-px w-56 bg-white/10">
+        <div className="h-full bg-gold-400" style={{ width: `${count}%` }} />
+      </div>
+      <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-stone-500">
+        Móveis planejados · Maringá
+      </p>
+    </div>
+  )
+}
+
+/* ---------- CURSOR PERSONALIZADO ---------- */
+export function CustomCursor() {
+  const dotRef = useRef(null)
+  const ringRef = useRef(null)
+
+  useEffect(() => {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return
+    document.body.classList.add('has-custom-cursor')
+    const dot = dotRef.current
+    const ring = ringRef.current
+    let x = -100
+    let y = -100
+    let rx = -100
+    let ry = -100
+    let scale = 1
+    let targetScale = 1
+    let raf = 0
+
+    const onMove = (e) => {
+      x = e.clientX
+      y = e.clientY
+    }
+    const onOver = (e) => {
+      targetScale = e.target.closest('a, button, input, select, textarea, [data-cursor]') ? 2.1 : 1
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('mouseover', onOver, { passive: true })
+
+    const loop = () => {
+      rx += (x - rx) * 0.16
+      ry += (y - ry) * 0.16
+      scale += (targetScale - scale) * 0.18
+      if (dot) dot.style.transform = `translate(${x}px, ${y}px)`
+      if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) scale(${scale.toFixed(3)})`
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseover', onOver)
+      document.body.classList.remove('has-custom-cursor')
+    }
+  }, [])
+
+  return (
+    <>
+      <div ref={dotRef} aria-hidden="true" className="cursor-dot" />
+      <div ref={ringRef} aria-hidden="true" className="cursor-ring" />
+    </>
+  )
+}
+
+/* ---------- TEXTURA DE FILME ---------- */
+export function Grain() {
+  return <div aria-hidden="true" className="grain" />
 }
 
 /* Anima elementos ao entrar na viewport */
@@ -46,11 +150,94 @@ export function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
+/* Título revelado palavra por palavra */
+export function SplitWords({
+  text,
+  className = '',
+  delay = 0,
+  step = 60,
+  accentWords = [],
+  accentClass = '',
+  active = true,
+}) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (!active) return
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.4 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [active])
+
+  const words = text.split(' ')
+
+  return (
+    <span ref={ref} className={`${visible ? 'is-visible' : ''} ${className}`}>
+      {words.map((word, i) => (
+        <span key={i}>
+          <span className="split-mask">
+            <span
+              className={`split-word ${accentWords.includes(word) ? accentClass : ''}`}
+              style={{ '--w-delay': `${delay + i * step}ms` }}
+            >
+              {word}
+            </span>
+          </span>
+          {i < words.length - 1 ? <span>{' '}</span> : null}
+        </span>
+      ))}
+    </span>
+  )
+}
+
+/* Imagem revelada com clip-path cinematográfico */
+export function ImageReveal({ src, alt, className = '', imgClassName = '', eager = false }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('is-visible')
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.2 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className={`img-reveal overflow-hidden ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        className={`h-full w-full object-cover ${imgClassName}`}
+      />
+    </div>
+  )
+}
+
 export function Eyebrow({ children, dark = false }) {
   return (
     <p
       className={`text-xs font-bold uppercase tracking-[0.22em] ${
-        dark ? 'text-caramel-300' : 'text-caramel-600'
+        dark ? 'text-gold-400' : 'text-caramel-600'
       }`}
     >
       {children}
@@ -70,7 +257,7 @@ export function SectionHeading({ eyebrow, title, description, dark = false, cent
         {title}
       </h2>
       {description && (
-        <p className={`mt-4 text-base leading-relaxed ${dark ? 'text-stone-300' : 'text-stone-600'}`}>
+        <p className={`mt-4 text-base leading-relaxed ${dark ? 'text-stone-400' : 'text-stone-600'}`}>
           {description}
         </p>
       )}
@@ -270,11 +457,16 @@ export function BackToTop() {
 
   if (!show) return null
 
+  const toTop = () => {
+    if (window.__lenis) window.__lenis.scrollTo(0)
+    else window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <button
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={toTop}
       aria-label="Voltar ao topo"
-      className="fixed bottom-5 left-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-espresso-900 text-linen shadow-xl ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-espresso-800 hover:ring-gold-500/50"
+      className="fixed bottom-5 left-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-coal-800 text-gold-300 shadow-xl ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-coal-800 hover:ring-gold-500/50"
     >
       <ArrowUp className="h-5 w-5" />
     </button>
@@ -320,7 +512,7 @@ export function WhatsFloat() {
       <MessageCircle className="h-6 w-6 shrink-0" />
       <span className="absolute -right-1 -top-1 flex h-4 w-4">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#25d366] opacity-60" />
-        <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-cream bg-[#25d366]" />
+        <span className="relative inline-flex h-4 w-4 rounded-full border-2 border-coal-950 bg-[#25d366]" />
       </span>
     </a>
   )

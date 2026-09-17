@@ -8,6 +8,7 @@ import {
   Send,
 } from 'lucide-react'
 import { AMBIENTES, NAV_LINKS, SITE, waLink } from './data'
+import LogoImage from './Logo'
 import {
   FacebookIcon,
   InstagramIcon,
@@ -16,10 +17,9 @@ import {
   SectionHeading,
   Spotlight,
 } from './ui'
-import LogoImage from './Logo'
 
 const inputClass =
-  'w-full rounded-xl border border-stone-200 bg-cream px-4 py-3 text-[15px] text-espresso-900 placeholder:text-stone-400 outline-none transition-all focus:border-caramel-500 focus:ring-2 focus:ring-caramel-500/30'
+  'w-full rounded-xl border border-white/10 bg-coal-950 px-4 py-3 text-[15px] text-white placeholder:text-stone-600 outline-none transition-all focus:border-gold-500 focus:ring-2 focus:ring-gold-500/30'
 
 /* ---------- CONTATO ---------- */
 export function Contato() {
@@ -68,143 +68,150 @@ export function Contato() {
   ]
 
   return (
-    <section id="contato" className="mx-auto max-w-7xl px-6 py-16 lg:py-24">
-      <SectionHeading
-        center
-        eyebrow="Contato"
-        title="Vamos tirar seu projeto do papel?"
-        description="Preencha o formulário ou fale direto com a nossa equipe. Retornamos o mais rápido possível."
+    <section id="contato" className="relative overflow-hidden bg-coal-950 py-16 lg:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-1/2 h-72 w-[52rem] max-w-full -translate-x-1/2 rounded-full bg-gold-500/10 blur-3xl"
       />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <SectionHeading
+          center
+          dark
+          eyebrow="06 — Contato"
+          title="Vamos tirar seu projeto do papel?"
+          description="Preencha o formulário ou fale direto com a nossa equipe. Retornamos o mais rápido possível."
+        />
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-5">
-        {/* Formulário */}
-        <Reveal className="lg:col-span-2">
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-3xl bg-white p-7 shadow-[0_10px_30px_-12px_rgba(32,26,21,0.15)] ring-1 ring-stone-200/60 sm:p-8"
-          >
-            <h3 className="font-display text-xl font-bold text-espresso-900">Solicitar orçamento</h3>
-            <p className="mt-1.5 text-sm text-stone-500">
-              Enviamos sua mensagem direto para o nosso WhatsApp.
-            </p>
-            <div className="mt-6 space-y-4">
-              <div>
-                <label htmlFor="nome" className="mb-1.5 block text-sm font-bold text-espresso-900">
-                  Nome*
-                </label>
-                <input
-                  id="nome"
-                  required
-                  value={form.nome}
-                  onChange={update('nome')}
-                  placeholder="Seu nome completo"
-                  className={inputClass}
-                />
-              </div>
-              <div>
-                <label htmlFor="telefone" className="mb-1.5 block text-sm font-bold text-espresso-900">
-                  WhatsApp*
-                </label>
-                <input
-                  id="telefone"
-                  required
-                  value={form.telefone}
-                  onChange={update('telefone')}
-                  placeholder="(44) 99999-9999"
-                  className={inputClass}
-                />
-              </div>
-              <div>
-                <label htmlFor="ambiente" className="mb-1.5 block text-sm font-bold text-espresso-900">
-                  Ambiente de interesse
-                </label>
-                <select
-                  id="ambiente"
-                  value={form.ambiente}
-                  onChange={update('ambiente')}
-                  className={inputClass}
-                >
-                  <option value="">Selecione...</option>
-                  {AMBIENTES.map((a) => (
-                    <option key={a.label} value={a.label}>
-                      {a.label}
-                    </option>
-                  ))}
-                  <option value="Casa completa">Casa completa</option>
-                  <option value="Outro">Outro</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="mensagem" className="mb-1.5 block text-sm font-bold text-espresso-900">
-                  Mensagem
-                </label>
-                <textarea
-                  id="mensagem"
-                  rows={4}
-                  value={form.mensagem}
-                  onChange={update('mensagem')}
-                  placeholder="Conte um pouco sobre o seu projeto..."
-                  className={`${inputClass} resize-none`}
-                />
-              </div>
-              <Magnetic strength={0.05} className="block">
-                <button
-                  type="submit"
-                className="btn-shine group flex w-full items-center justify-center gap-2 rounded-full bg-espresso-900 px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-espresso-800"
-              >
-                Enviar pelo WhatsApp
-                <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
-              </Magnetic>
-            </div>
-          </form>
-        </Reveal>
-
-        {/* Informações + mapa */}
-        <div className="lg:col-span-3">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {infoCards.map((card, i) => (
-              <Reveal key={card.title} delay={i * 70}>
-                <Spotlight className="h-full rounded-2xl bg-white p-6 ring-1 ring-stone-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-gold-500/40">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-caramel-700">
-                    <card.icon className="h-5 w-5" />
-                  </span>
-                  <h4 className="mt-4 font-display text-[15px] font-bold text-espresso-900">
-                    {card.title}
-                  </h4>
-                  <div className="mt-1.5 space-y-0.5">
-                    {card.lines.map((line) => (
-                      <p key={line} className="text-sm leading-relaxed text-stone-600 break-words">
-                        {line}
-                      </p>
+        <div className="mt-12 grid gap-8 lg:grid-cols-5">
+          {/* Formulário */}
+          <Reveal className="lg:col-span-2">
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-3xl border border-white/10 bg-coal-800 p-7 shadow-[0_30px_80px_-24px_rgba(0,0,0,0.8)] sm:p-8"
+            >
+              <h3 className="font-display text-xl font-bold text-white">Solicitar orçamento</h3>
+              <p className="mt-1.5 text-sm text-stone-500">
+                Enviamos sua mensagem direto para o nosso WhatsApp.
+              </p>
+              <div className="mt-6 space-y-4">
+                <div>
+                  <label htmlFor="nome" className="mb-1.5 block text-sm font-bold text-stone-200">
+                    Nome*
+                  </label>
+                  <input
+                    id="nome"
+                    required
+                    value={form.nome}
+                    onChange={update('nome')}
+                    placeholder="Seu nome completo"
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="telefone" className="mb-1.5 block text-sm font-bold text-stone-200">
+                    WhatsApp*
+                  </label>
+                  <input
+                    id="telefone"
+                    required
+                    value={form.telefone}
+                    onChange={update('telefone')}
+                    placeholder="(44) 99999-9999"
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="ambiente" className="mb-1.5 block text-sm font-bold text-stone-200">
+                    Ambiente de interesse
+                  </label>
+                  <select
+                    id="ambiente"
+                    value={form.ambiente}
+                    onChange={update('ambiente')}
+                    className={`${inputClass} appearance-none [&>option]:bg-coal-900`}
+                  >
+                    <option value="">Selecione...</option>
+                    {AMBIENTES.map((a) => (
+                      <option key={a.label} value={a.label}>
+                        {a.label}
+                      </option>
                     ))}
-                  </div>
-                  {card.action && (
-                    <a
-                      href={card.action.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-caramel-700 hover:text-caramel-800"
-                    >
-                      {card.action.label}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  )}
-                </Spotlight>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={150}>
-            <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-stone-200/60">
-              <iframe
-                title="Mapa — Nardo Planejados, Maringá/PR"
-                src={SITE.mapsEmbed}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-72 w-full border-0 sm:h-80"
-              />
-            </div>
+                    <option value="Casa completa">Casa completa</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="mensagem" className="mb-1.5 block text-sm font-bold text-stone-200">
+                    Mensagem
+                  </label>
+                  <textarea
+                    id="mensagem"
+                    rows={4}
+                    value={form.mensagem}
+                    onChange={update('mensagem')}
+                    placeholder="Conte um pouco sobre o seu projeto..."
+                    className={`${inputClass} resize-none`}
+                  />
+                </div>
+                <Magnetic strength={0.05} className="block">
+                  <button
+                    type="submit"
+                    className="btn-shine glow-gold group flex w-full items-center justify-center gap-2 rounded-full bg-gold-400 px-8 py-4 text-sm font-bold text-coal-950 transition-colors duration-300 hover:bg-gold-300"
+                  >
+                    Enviar pelo WhatsApp
+                    <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </button>
+                </Magnetic>
+              </div>
+            </form>
           </Reveal>
+
+          {/* Informações + mapa */}
+          <div className="lg:col-span-3">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {infoCards.map((card, i) => (
+                <Reveal key={card.title} delay={i * 70} className="h-full">
+                  <Spotlight className="h-full rounded-2xl border border-white/10 bg-coal-800 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-1 hover:ring-gold-500/40">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-400/10 text-gold-300 ring-1 ring-gold-500/30">
+                      <card.icon className="h-5 w-5" />
+                    </span>
+                    <h4 className="mt-4 font-display text-[15px] font-bold text-white">
+                      {card.title}
+                    </h4>
+                    <div className="mt-1.5 space-y-0.5">
+                      {card.lines.map((line) => (
+                        <p key={line} className="break-words text-sm leading-relaxed text-stone-400">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                    {card.action && (
+                      <a
+                        href={card.action.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-gold-300 transition-colors hover:text-gold-200"
+                      >
+                        {card.action.label}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    )}
+                  </Spotlight>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={150}>
+              <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+                <iframe
+                  title="Mapa — Nardo Planejados, Maringá/PR"
+                  src={SITE.mapsEmbed}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-72 w-full border-0 [filter:grayscale(1)_invert(0.92)_contrast(0.9)] sm:h-80"
+                />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -216,7 +223,7 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-espresso-950 text-stone-400">
+    <footer className="border-t border-white/10 bg-black text-stone-400">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Marca */}
@@ -231,7 +238,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-caramel-500 hover:text-espresso-950"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:text-coal-950"
               >
                 <InstagramIcon className="h-[18px] w-[18px]" />
               </a>
@@ -240,7 +247,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-caramel-500 hover:text-espresso-950"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:text-coal-950"
               >
                 <FacebookIcon className="h-[18px] w-[18px]" />
               </a>
@@ -255,7 +262,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm font-medium">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="transition-colors hover:text-caramel-300">
+                  <a href={link.href} className="transition-colors hover:text-gold-300">
                     {link.label}
                   </a>
                 </li>
@@ -271,7 +278,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm font-medium">
               {AMBIENTES.map((a) => (
                 <li key={a.label}>
-                  <a href="#ambientes" className="transition-colors hover:text-caramel-300">
+                  <a href="#ambientes" className="transition-colors hover:text-gold-300">
                     {a.label} planejados
                   </a>
                 </li>
@@ -286,7 +293,7 @@ export function Footer() {
             </h4>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-caramel-400" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
                 <span>
                   {SITE.address}
                   <br />
@@ -296,14 +303,14 @@ export function Footer() {
                 </span>
               </li>
               <li>
-                <a href={`tel:${SITE.phoneHref}`} className="flex items-center gap-2.5 hover:text-caramel-300">
-                  <Phone className="h-4 w-4 shrink-0 text-caramel-400" />
+                <a href={`tel:${SITE.phoneHref}`} className="flex items-center gap-2.5 transition-colors hover:text-gold-300">
+                  <Phone className="h-4 w-4 shrink-0 text-gold-500" />
                   {SITE.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${SITE.email}`} className="flex items-center gap-2.5 break-all hover:text-caramel-300">
-                  <Mail className="h-4 w-4 shrink-0 text-caramel-400" />
+                <a href={`mailto:${SITE.email}`} className="flex items-center gap-2.5 break-all transition-colors hover:text-gold-300">
+                  <Mail className="h-4 w-4 shrink-0 text-gold-500" />
                   {SITE.email}
                 </a>
               </li>
@@ -313,7 +320,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-[13px] sm:flex-row">
           <p>© {year} Nardo Móveis Planejados Maringá · Todos os direitos reservados</p>
-          <p className="text-stone-500">Maringá/PR · {SITE.instagramHandle}</p>
+          <p className="text-stone-600">Maringá/PR · {SITE.instagramHandle}</p>
         </div>
       </div>
     </footer>
