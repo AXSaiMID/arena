@@ -23,6 +23,20 @@ npm run build     # gera a pasta dist/
 npm run preview   # pré-visualiza o build
 ```
 
+## Site publicado (GitHub Pages)
+
+- **Link para o cliente:** https://axsaimid.github.io/arena/
+- O conteúdo publicado está no branch `gh-pages` (gerado a partir de `dist/`).
+
+Para atualizar o site publicado após qualquer alteração:
+
+```bash
+npm run build && npm run deploy
+```
+
+> Na primeira vez é preciso ativar o Pages em
+> **Settings → Pages → Source: Deploy from a branch → Branch: gh-pages → Save**.
+
 ## Estrutura
 
 - `index.html` — HTML base, fontes e metadados (pt-BR)
